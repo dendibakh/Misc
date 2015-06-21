@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FolderSnapshot", "FolderSnapshot\FolderSnapshot.vcxproj", "{AA288C00-7F32-4E1A-BFE4-2347E58C0A16}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FolderSnapshotTest", "FolderSnapshotTest\FolderSnapshotTest.vcxproj", "{4CE5E45B-7B65-4940-82EC-5E4B0CEF962D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA288C00-7F32-4E1A-BFE4-2347E58C0A16} = {AA288C00-7F32-4E1A-BFE4-2347E58C0A16}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{373DA54B-7D79-4EFE-A928-67A24ED151B4}"
+	ProjectSection(SolutionItems) = preProject
+		FolderSnapshot.vsmdi = FolderSnapshot.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FolderSnapshotLauncher", "FolderSnapshotLauncher\FolderSnapshotLauncher.vcxproj", "{D1481D47-A99F-4473-AEF2-BCC083C34648}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA288C00-7F32-4E1A-BFE4-2347E58C0A16} = {AA288C00-7F32-4E1A-BFE4-2347E58C0A16}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RestoreFolderLauncher", "RestoreFolderLauncher\RestoreFolderLauncher.vcxproj", "{96385F3A-3189-4374-B79D-37D7A6752F6D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA288C00-7F32-4E1A-BFE4-2347E58C0A16} = {AA288C00-7F32-4E1A-BFE4-2347E58C0A16}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = FolderSnapshot.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA288C00-7F32-4E1A-BFE4-2347E58C0A16}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AA288C00-7F32-4E1A-BFE4-2347E58C0A16}.Debug|Win32.Build.0 = Debug|Win32
+		{AA288C00-7F32-4E1A-BFE4-2347E58C0A16}.Release|Win32.ActiveCfg = Release|Win32
+		{AA288C00-7F32-4E1A-BFE4-2347E58C0A16}.Release|Win32.Build.0 = Release|Win32
+		{4CE5E45B-7B65-4940-82EC-5E4B0CEF962D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4CE5E45B-7B65-4940-82EC-5E4B0CEF962D}.Debug|Win32.Build.0 = Debug|Win32
+		{4CE5E45B-7B65-4940-82EC-5E4B0CEF962D}.Release|Win32.ActiveCfg = Release|Win32
+		{4CE5E45B-7B65-4940-82EC-5E4B0CEF962D}.Release|Win32.Build.0 = Release|Win32
+		{D1481D47-A99F-4473-AEF2-BCC083C34648}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D1481D47-A99F-4473-AEF2-BCC083C34648}.Debug|Win32.Build.0 = Debug|Win32
+		{D1481D47-A99F-4473-AEF2-BCC083C34648}.Release|Win32.ActiveCfg = Release|Win32
+		{D1481D47-A99F-4473-AEF2-BCC083C34648}.Release|Win32.Build.0 = Release|Win32
+		{96385F3A-3189-4374-B79D-37D7A6752F6D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{96385F3A-3189-4374-B79D-37D7A6752F6D}.Debug|Win32.Build.0 = Debug|Win32
+		{96385F3A-3189-4374-B79D-37D7A6752F6D}.Release|Win32.ActiveCfg = Release|Win32
+		{96385F3A-3189-4374-B79D-37D7A6752F6D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

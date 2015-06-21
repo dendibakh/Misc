@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StaticMemberMessUp", "StaticMemberMessUp\StaticMemberMessUp.vcproj", "{C1003BF8-F845-4467-919F-D7273F7A8895}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lib", "Lib\Lib.vcproj", "{5A1F88AE-A40A-4FD7-B766-0C6C12264602}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dll", "Dll\Dll.vcproj", "{9480495C-CF9F-41DD-9296-5C5B8A1BB460}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1003BF8-F845-4467-919F-D7273F7A8895}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C1003BF8-F845-4467-919F-D7273F7A8895}.Debug|Win32.Build.0 = Debug|Win32
+		{C1003BF8-F845-4467-919F-D7273F7A8895}.Release|Win32.ActiveCfg = Release|Win32
+		{C1003BF8-F845-4467-919F-D7273F7A8895}.Release|Win32.Build.0 = Release|Win32
+		{5A1F88AE-A40A-4FD7-B766-0C6C12264602}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5A1F88AE-A40A-4FD7-B766-0C6C12264602}.Debug|Win32.Build.0 = Debug|Win32
+		{5A1F88AE-A40A-4FD7-B766-0C6C12264602}.Release|Win32.ActiveCfg = Release|Win32
+		{5A1F88AE-A40A-4FD7-B766-0C6C12264602}.Release|Win32.Build.0 = Release|Win32
+		{9480495C-CF9F-41DD-9296-5C5B8A1BB460}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9480495C-CF9F-41DD-9296-5C5B8A1BB460}.Debug|Win32.Build.0 = Debug|Win32
+		{9480495C-CF9F-41DD-9296-5C5B8A1BB460}.Release|Win32.ActiveCfg = Release|Win32
+		{9480495C-CF9F-41DD-9296-5C5B8A1BB460}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
