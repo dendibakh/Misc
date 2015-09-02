@@ -1,0 +1,6 @@
+Number of nested folders: 1
+Number of nested files: 2
+Size in bytes: 164
+List of files:
+1. test0.txt 0 bytes; Tue Sep  1 15:03:58 2015
+2. test1.txt 12 bytes; Tue Sep  1 15:03:58 2015
