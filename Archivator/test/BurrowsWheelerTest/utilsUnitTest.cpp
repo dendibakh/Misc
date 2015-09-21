@@ -216,3 +216,15 @@ TEST(utilsUnitTest, test24)
      str += static_cast<char>(-32);
      EXPECT_EQ(etalon, convertToBoolVect(str));
 }
+
+TEST(utilsUnitTest, test25)
+{
+     std::string str(readFile("./test/BurrowsWheelerTest/samples/abbbaabbbbaccabbaaabc.txt"));
+     EXPECT_EQ(str, convertToString(convertToBoolVect(str)));
+}
+
+TEST(utilsUnitTest, test26)
+{
+     std::string str(readFile("./test/BurrowsWheelerTest/samples/nomatch.txt"));
+     EXPECT_EQ(str, convertToString(convertToBoolVect(str)));
+}
