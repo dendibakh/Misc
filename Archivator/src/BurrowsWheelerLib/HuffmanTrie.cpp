@@ -3,7 +3,7 @@
 #include <sstream>
 #include "utils.h"
 
-HuffmanTrie::Node::Node(char symbol, int freq) : symbol(symbol), freq(freq), left(0), right(0)
+HuffmanTrie::Node::Node(unsigned char symbol, int freq) : symbol(symbol), freq(freq), left(0), right(0)
 {
 }
 

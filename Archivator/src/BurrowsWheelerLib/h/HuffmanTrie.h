@@ -9,11 +9,11 @@ class HuffmanTrie
 public:
 	struct Node
 	{
-		char symbol;
+		unsigned char symbol;
 		int freq;
 		Node* left;
 		Node* right;
-		Node(char symbol, int freq);
+		Node(unsigned char symbol, int freq);
 		bool isLeaf() const;
 		bool operator==(const Node& rhs) const;
 	};

@@ -2,7 +2,7 @@
 #include <fstream>
 #include <stdexcept>
 
-std::vector<bool> getBinaryRepresentation(char symbol)
+std::vector<bool> getBinaryRepresentation(unsigned char symbol)
 {
 	std::vector<bool> retVect;
 	for (short j = 7; j >= 0; --j)
@@ -13,12 +13,12 @@ std::vector<bool> getBinaryRepresentation(char symbol)
 	return retVect;
 }
 
-char getSymbolStrict(const std::vector<bool>& BinaryRepresentation)
+unsigned char getSymbolStrict(const std::vector<bool>& BinaryRepresentation)
 {
 	return getSymbolStrict(BinaryRepresentation.begin(), BinaryRepresentation.end());
 }
 
-char getSymbolStrict(const std::vector<bool>::const_iterator& BinaryRepresentation_begin, const std::vector<bool>::const_iterator& BinaryRepresentation_end)
+unsigned char getSymbolStrict(const std::vector<bool>::const_iterator& BinaryRepresentation_begin, const std::vector<bool>::const_iterator& BinaryRepresentation_end)
 {
 	if (BinaryRepresentation_end - BinaryRepresentation_begin != 8)
 		return 0;
@@ -26,17 +26,17 @@ char getSymbolStrict(const std::vector<bool>::const_iterator& BinaryRepresentati
 	return getSymbol(BinaryRepresentation_begin, BinaryRepresentation_end);
 }
 
-char getSymbol(const std::vector<bool>& BinaryRepresentation)
+unsigned char getSymbol(const std::vector<bool>& BinaryRepresentation)
 {
 	return getSymbol(BinaryRepresentation.begin(), BinaryRepresentation.end());
 }
 
-char getSymbol(const std::vector<bool>::const_iterator& BinaryRepresentation_begin, const std::vector<bool>::const_iterator& BinaryRepresentation_end)
+unsigned char getSymbol(const std::vector<bool>::const_iterator& BinaryRepresentation_begin, const std::vector<bool>::const_iterator& BinaryRepresentation_end)
 {
 	if (BinaryRepresentation_begin == BinaryRepresentation_end)
 		return 0;
 
-	char result = 0;
+	unsigned char result = 0;
 	for (short j = 0; j < BinaryRepresentation_end - BinaryRepresentation_begin; ++j)
 	{
 		result |= *(BinaryRepresentation_begin + j) << (7 - j);
@@ -49,7 +49,7 @@ std::vector<bool> getBinaryRepresentation(size_t value)
     std::vector<bool> binRep;
     for (size_t i = 0; i < sizeof(value); ++i)
     {
-        char* c = (char*)&value + i;
+        unsigned char* c = (unsigned char*)&value + i;
         std::vector<bool> oneByte = getBinaryRepresentation(*c);
         binRep.insert(binRep.end(), oneByte.begin(), oneByte.end());
     }
@@ -72,7 +72,7 @@ size_t getValue(const std::vector<bool>::const_iterator& BinaryRepresentation_be
     unsigned short bytes = sizeof(OriginalStringRow);
     for (size_t i = 0; i < bytes; ++i)
     {
-        char* c = (char*)&OriginalStringRow + i;
+        unsigned char* c = (unsigned char*)&OriginalStringRow + i;
         *c = getSymbol(BinaryRepresentation_begin + 8 * i, BinaryRepresentation_begin + 8 * (i + 1));
     }
     return OriginalStringRow;
@@ -113,4 +113,17 @@ std::string convertToString(const std::vector<bool>& boolVect)
        retStr[i] = getSymbol(begin, end);
    }
    return retStr;
+}
+
+std::vector<bool> convertToBoolVect(const std::string& str)
+{
+   size_t bytes = str.size();
+   std::vector<bool> retVect;
+
+   for (size_t i = 0; i < bytes; ++i)
+   {
+       std::vector<bool> temp = getBinaryRepresentation(static_cast<unsigned char>(str[i]));
+       retVect.insert(retVect.end(), temp.begin(), temp.end());
+   }
+   return retVect;
 }

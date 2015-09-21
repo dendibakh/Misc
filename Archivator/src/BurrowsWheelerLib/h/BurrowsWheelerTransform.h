@@ -29,12 +29,9 @@ private:
         }
     };
 public:
-    BurrowsWheelerDecode(size_t originalStringRow, const std::string& str, std::string& result);
+    BurrowsWheelerDecode(size_t originalStringRow, const std::string& str, std::string& originalString);
     virtual ~BurrowsWheelerDecode();
 
-    //std::string getOriginalString() const;
-private:
-    std::string& originalString;
 protected:
     std::vector<elem> sortedStr;
 };

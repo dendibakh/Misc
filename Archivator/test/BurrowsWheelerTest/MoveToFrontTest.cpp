@@ -139,3 +139,13 @@ TEST(MoveToFrontTest, testEncodeDecode3)
     MoveToFrontFake::encodedResult encodedStr = moveToFront.encode(str);
     EXPECT_TRUE(str == moveToFront.decode(encodedStr));
 }
+
+TEST(MoveToFrontTest, testEncodeDecodeStrangeSymbols)
+{
+    std::string str;
+    str += static_cast<char>(-128);
+    str += static_cast<char>(-2);
+    str += static_cast<char>(-100);
+    MoveToFrontFake::encodedResult encodedStr = MoveToFrontFake().encode(str);
+    EXPECT_TRUE(str == MoveToFrontFake().decode(encodedStr));
+}

@@ -271,3 +271,16 @@ TEST(HuffmanAlgorithmUnitTest, test16)
     */
     // For this case Comression rate = 1.766.
 }
+
+TEST(HuffmanAlgorithmUnitTest, test17)
+{
+    HuffmanAlgorithmFake huffman;
+    std::string text;
+    text += static_cast<char>(224);
+    text += static_cast<char>(-128);
+    text += static_cast<char>(-2);
+    text += static_cast<char>(-100);
+    HuffmanAlgorithmFake::compressedResult compressed = huffman.getCompressedResult(text);
+    std::string expanded = huffman.getExpandedResult(compressed);
+    EXPECT_EQ(text, expanded);
+}

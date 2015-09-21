@@ -59,7 +59,7 @@ void HuffmanAlgorithm::countFrequencies(const std::string& text)
 	freq = std::vector<size_t>(HuffmanTrie::radix, 0);
 	for (std::string::const_iterator i = text.begin(); i != text.end(); ++i)
 	{
-		++freq[*i];
+		++freq[static_cast<unsigned char>(*i)];
 	}
 }
 
@@ -73,7 +73,7 @@ HuffmanAlgorithm::compressedResult HuffmanAlgorithm::compress(const std::string&
 
 	for (std::string::const_iterator i = text.begin(); i != text.end(); ++i)
 	{
-		retVect.insert(retVect.end(), symbolTable[*i].begin(), symbolTable[*i].end());
+		retVect.insert(retVect.end(), symbolTable[static_cast<unsigned char>(*i)].begin(), symbolTable[static_cast<unsigned char>(*i)].end());
 	}
 
 	return retVect;
