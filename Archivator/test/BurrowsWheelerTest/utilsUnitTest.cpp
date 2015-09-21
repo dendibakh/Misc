@@ -35,28 +35,28 @@ TEST(utilsUnitTest, test3)
 {
      bool binaryRepresentationArray[] = { 0, 1, 0, 0, 0, 0, 0, 1 };
      std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
-     EXPECT_EQ('A', getSymbol(binaryRepresentation));
+     EXPECT_EQ('A', getSymbolStrict(binaryRepresentation));
 }
 
 TEST(utilsUnitTest, test4)
 {
      bool binaryRepresentationArray[] = { 0, 1, 0, 0, 1, 0, 0, 1 };
      std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
-     EXPECT_EQ('I', getSymbol(binaryRepresentation));
+     EXPECT_EQ('I', getSymbolStrict(binaryRepresentation));
 }
 
 TEST(utilsUnitTest, test5)
 {
      bool binaryRepresentationArray[] = { 0, 1, 0, 0, 1, 0, 0 };
      std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
-     EXPECT_EQ('\0', getSymbol(binaryRepresentation));
+     EXPECT_EQ('\0', getSymbolStrict(binaryRepresentation));
 }
 
 TEST(utilsUnitTest, test6)
 {
      bool binaryRepresentationArray[] = { 0, 1, 0, 0, 1, 0, 0, 0, 0};
      std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
-     EXPECT_EQ('\0', getSymbol(binaryRepresentation));
+     EXPECT_EQ('\0', getSymbolStrict(binaryRepresentation));
 }
 
 TEST(utilsUnitTest, test7)
@@ -108,4 +108,72 @@ TEST(utilsUnitTest, test12)
      std::string fileContents = readFile("./test/BurrowsWheelerTest/samples/nomatch.txt");
      std::string etalon = "abcdefg\nhijklmnopqrstuvw\nxyzABCDEFGHIJKLMNOPQRS\nTUVWXYZ1234567890!@#$%^&*()\n";
      EXPECT_EQ(etalon, fileContents);
+}
+
+TEST(utilsUnitTest, test13)
+{
+     bool binaryRepresentationArray[] = { 0, 1, 0, 0, 1 };
+     std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
+     EXPECT_EQ(72, getSymbol(binaryRepresentation));
+}
+
+TEST(utilsUnitTest, test14)
+{
+     bool binaryRepresentationArray[] = { 0, 1, 0, 0, 1, 0, 0, 1 };
+     std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
+     EXPECT_EQ('I', getSymbol(binaryRepresentation));
+}
+
+TEST(utilsUnitTest, test15)
+{
+     bool binaryRepresentationArray[] = { 1, 1, 1 };
+     std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
+     EXPECT_EQ(-32, getSymbol(binaryRepresentation));
+}
+
+TEST(utilsUnitTest, test16)
+{
+     bool binaryRepresentationArray[] = { 1, 1, 1 };
+     std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
+     std::string etalon;
+     etalon += static_cast<char>(-32);
+     EXPECT_EQ(etalon, convertToString(binaryRepresentation));
+}
+
+TEST(utilsUnitTest, test17)
+{
+     bool binaryRepresentationArray[] = { 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1 };
+     std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
+     std::string etalon("IA");
+     EXPECT_EQ(etalon, convertToString(binaryRepresentation));
+}
+
+TEST(utilsUnitTest, test18)
+{
+     bool binaryRepresentationArray[] = { 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1 };
+     std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
+     std::string etalon("IA");
+     etalon += static_cast<char>(-128);
+     EXPECT_EQ(etalon, convertToString(binaryRepresentation));
+}
+
+TEST(utilsUnitTest, test19)
+{
+     bool binaryRepresentationArray[] = { 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1 };
+     std::vector<bool> binaryRepresentation(binaryRepresentationArray, binaryRepresentationArray + sizeof(binaryRepresentationArray) / sizeof(binaryRepresentationArray[0]));
+     std::string etalon("IA");
+     etalon += static_cast<char>(-2);
+     EXPECT_EQ(etalon, convertToString(binaryRepresentation));
+}
+
+TEST(utilsUnitTest, test20)
+{
+     std::vector<bool> binaryRepresentation;
+     std::vector<bool> temp = getBinaryRepresentation('c');
+     binaryRepresentation.insert(binaryRepresentation.end(), temp.begin(), temp.end());
+     temp = getBinaryRepresentation('+');
+     binaryRepresentation.insert(binaryRepresentation.end(), temp.begin(), temp.end());
+     binaryRepresentation.insert(binaryRepresentation.end(), temp.begin(), temp.end());
+     std::string etalon("c++");
+     EXPECT_EQ(etalon, convertToString(binaryRepresentation));
 }

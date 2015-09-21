@@ -13,6 +13,19 @@ std::vector<bool> getBinaryRepresentation(char symbol)
 	return retVect;
 }
 
+char getSymbolStrict(const std::vector<bool>& BinaryRepresentation)
+{
+	return getSymbolStrict(BinaryRepresentation.begin(), BinaryRepresentation.end());
+}
+
+char getSymbolStrict(const std::vector<bool>::const_iterator& BinaryRepresentation_begin, const std::vector<bool>::const_iterator& BinaryRepresentation_end)
+{
+	if (BinaryRepresentation_end - BinaryRepresentation_begin != 8)
+		return 0;
+
+	return getSymbol(BinaryRepresentation_begin, BinaryRepresentation_end);
+}
+
 char getSymbol(const std::vector<bool>& BinaryRepresentation)
 {
 	return getSymbol(BinaryRepresentation.begin(), BinaryRepresentation.end());
@@ -22,11 +35,9 @@ char getSymbol(const std::vector<bool>::const_iterator& BinaryRepresentation_beg
 {
 	if (BinaryRepresentation_begin == BinaryRepresentation_end)
 		return 0;
-	if (BinaryRepresentation_end - BinaryRepresentation_begin != 8)
-		return 0;
 
 	char result = 0;
-	for (short j = 0; j < 8; ++j)
+	for (short j = 0; j < BinaryRepresentation_end - BinaryRepresentation_begin; ++j)
 	{
 		result |= *(BinaryRepresentation_begin + j) << (7 - j);
 	}
@@ -84,4 +95,22 @@ std::string readFile(const std::string& fileName)
             fileContents += '\n';
     }
     return fileContents;
+}
+
+std::string convertToString(const std::vector<bool>& boolVect)
+{
+   size_t bytes = ( boolVect.size() - 1 ) / 8 + 1;
+   std::string retStr(bytes, 0);
+
+   std::vector<bool>::const_iterator BinaryRepresentation_begin = boolVect.begin();
+
+   for (size_t i = 0; i < bytes; ++i)
+   {
+       std::vector<bool>::const_iterator begin = boolVect.begin() + 8 * i;
+       std::vector<bool>::const_iterator end = boolVect.begin() + 8 * (i + 1);
+       if (boolVect.end() - begin < 8)
+           end = boolVect.end();
+       retStr[i] = getSymbol(begin, end);
+   }
+   return retStr;
 }
