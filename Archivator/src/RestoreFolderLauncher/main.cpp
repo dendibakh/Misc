@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include "RestoreFolder.h"
+#include "BurrowsWheeler.h"
 
 using namespace boost::program_options;
 using namespace boost::filesystem;
@@ -18,7 +19,8 @@ int main(int argc, char* argv[])
            ("help", "produce help message")
            ("binary_file,b", value<string>(), "path to generated binary file")
            ("dest_folder,d", value<string>(), "destination folder")
-           ("verbose,v", "print statistic for each folder");
+           ("verbose,v", "print statistic for each folder")
+           ("decompress,c", "decompress the snapshot");
 
        variables_map vm;
        store(parse_command_line(argc, argv, desc), vm);
@@ -50,12 +52,29 @@ int main(int argc, char* argv[])
        if (!dest_folder.is_absolute())
           dest_folder = system_complete(dest_folder);
 
+       if (vm.count("decompress")) 
+       {
+           path tmpFile(binary_file);
+           tmpFile += ".tmp";
+           if (exists(tmpFile))
+              remove(tmpFile);
+
+           BurrowsWheelerFile().decode(binary_file, tmpFile);
+
+           binary_file = tmpFile;
+       }
        
        auto_ptr<IRestoreFolder> rf;
        if (vm.count("verbose"))
           rf.reset(new RestoreFolder(binary_file, dest_folder));
        else
           rf.reset(new RestoreFolderNoLogging(binary_file, dest_folder));
+
+       if (vm.count("decompress")) 
+       {
+          remove(binary_file);
+       }
+
        if (!rf->good())
        {
           cout << rf->getError() << endl;

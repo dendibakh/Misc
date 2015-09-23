@@ -6,6 +6,7 @@
 #include <memory>
 #include "StoreFolder.h"
 #include "util.h"
+#include "BurrowsWheeler.h"
 
 using namespace boost;
 using namespace boost::filesystem;
@@ -46,7 +47,8 @@ int main(int argc, char* argv[])
            ("help", "produce help message")
            ("folder_path,f", value<string>(), "path to folder for making a snapshot")
            ("depth,d", value<int>(&depth)->default_value(MAX_DEPTH), "depth of exploring")
-           ("extension_filter,e", value<string>(), "list of extensions separated by comma");
+           ("extension_filter,e", value<string>(), "list of extensions separated by comma")
+           ("compress,c", "compress the output snapshot");
 
        positional_options_description p;
        p.add("folder_path", -1);
@@ -71,7 +73,7 @@ int main(int argc, char* argv[])
        {
            cout << "Depth of exploring must be greater of equal to 0." << endl << desc;
            return 1;
-       }   
+       }
 
        path folder_path(vm["folder_path"].as< string >());
        if (!folder_path.is_absolute())
@@ -92,6 +94,19 @@ int main(int argc, char* argv[])
        {
           cout << sf->getError() << endl;
           return 1;
+       }
+
+       if (vm.count("compress")) 
+       {
+           path tmpFile(binaryFile);
+           tmpFile += ".tmp";
+           if (exists(tmpFile))
+              remove(tmpFile);
+
+           BurrowsWheelerFile().encode(binaryFile, tmpFile);
+
+           remove(binaryFile);
+           rename(tmpFile, binaryFile);
        }
    }                                                                    
    catch(std::exception& e)

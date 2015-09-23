@@ -105,4 +105,6 @@ namespace
 
 TEST(BurrowsWheelerFileTest, test1) { checkEncodeDecodeFile_CompareFiles("Output.bin", "1");    }
 TEST(BurrowsWheelerFileTest, test2) { checkEncodeDecodeFile_CompareFiles("Output.bin", "2");    }
-TEST(BurrowsWheelerFileTest, test3) { checkEncodeDecodeFile_CompareFiles("Output.bin", "3");    }
+//TEST(BurrowsWheelerFileTest, test3) { checkEncodeDecodeFile_CompareFiles("Output.bin", "3");    } // 10 min. Place file with size = 60 MB.
+TEST(BurrowsWheelerFileTest, test4) { checkEncodeDecodeFile_CompareFiles("Output.bin", "4");    }
+TEST(BurrowsWheelerFileTest, test5) { checkEncodeDecodeFile_CompareFiles("Output.bin", "5");    }

@@ -7,8 +7,6 @@
 using namespace std;
 using namespace boost::filesystem;
 
-const uintmax_t OneHundredMegabytes = 100 * 1024 * 1024;
-
 BurrowsWheeler::BurrowsWheeler()
 {
 
@@ -67,6 +65,7 @@ void BurrowsWheelerFile::encode(const boost::filesystem::path& fileName, const b
            throw domain_error("Attempt to store content of the file. Can't create output file");
 
    uintmax_t size = file_size(fileName);
+   const uintmax_t OneHundredMegabytes = 100 * 1024 * 1024;
    while (size > 0)
    {
            size_t piecelength = 0;
