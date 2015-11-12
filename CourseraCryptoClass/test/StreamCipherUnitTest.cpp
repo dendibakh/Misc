@@ -1,34 +1,12 @@
 #include "gtest/gtest.h"
-#include <vector>
-#include <string>
+#include "StreamCipher.h"
+#include "utils.h"
 #include <iostream>
-#include <sstream>
 
 using namespace testing;
 
 namespace
 {
-    template <class T>
-    void checkTwoVectorsAreEqual(const T& lhs, const T& rhs)
-    {
-         EXPECT_EQ(lhs.size(), rhs.size());
-         EXPECT_TRUE(std::equal(lhs.begin(), lhs.end(), rhs.begin()));
-    }
-
-    std::string hex_to_string(const std::string& str)
-    {
-        std::string retStr;
-        for(size_t i = 0; i < str.length(); i+= 2)
-        {
-            std::stringstream HexString;
-            HexString << str[i] << str[i + 1];
-            char c = 0;
-            HexString >> c;
-            retStr += c;
-        }
-        return retStr;
-    }
-
     std::vector<std::string> getCipherTexts()
     {
         std::vector<std::string> retVect;
@@ -42,67 +20,16 @@ namespace
         retVect.push_back(hex_to_string("315c4eeaa8b5f8bffd11155ea506b56041c6a00c8a08854dd21a4bbde54ce56801d943ba708b8a3574f40c00fff9e00fa1439fd0654327a3bfc860b92f89ee04132ecb9298f5fd2d5e4b45e40ecc3b9d59e9417df7c95bba410e9aa2ca24c5474da2f276baa3ac325918b2daada43d6712150441c2e04f6565517f317da9d3"));
         retVect.push_back(hex_to_string("271946f9bbb2aeadec111841a81abc300ecaa01bd8069d5cc91005e9fe4aad6e04d513e96d99de2569bc5e50eeeca709b50a8a987f4264edb6896fb537d0a716132ddc938fb0f836480e06ed0fcd6e9759f40462f9cf57f4564186a2c1778f1543efa270bda5e933421cbe88a4a52222190f471e9bd15f652b653b7071aec59a2705081ffe72651d08f822c9ed6d76e48b63ab15d0208573a7eef027"));
         retVect.push_back(hex_to_string("466d06ece998b7a2fb1d464fed2ced7641ddaa3cc31c9941cf110abbf409ed39598005b3399ccfafb61d0315fca0a314be138a9f32503bedac8067f03adbf3575c3b8edc9ba7f537530541ab0f9f3cd04ff50d66f1d559ba520e89a2cb2a83"));
+        retVect.push_back(hex_to_string("32510ba9babebbbefd001547a810e67149caee11d945cd7fc81a05e9f85aac650e9052ba6a8cd8257bf14d13e6f0a803b54fde9e77472dbff89d71b57bddef121336cb85ccb8f3315f4b52e301d16e9f52f904"));
         return retVect;
     }
-
-    std::string getTargetCipherText()
-    {
-        return hex_to_string("32510ba9babebbbefd001547a810e67149caee11d945cd7fc81a05e9f85aac650e9052ba6a8cd8257bf14d13e6f0a803b54fde9e77472dbff89d71b57bddef121336cb85ccb8f3315f4b52e301d16e9f52f904");
-    }
-
-    std::string XORstrings(const std::string& lhs, const std::string& rhs)
-    {
-        size_t minLen = std::min(lhs.size(), rhs.size());
-        std::string retStr(minLen, 0);
-        for (size_t i = 0; i < minLen; ++i)
-        {
-            retStr[i] = lhs[i] ^ rhs[i];
-        }
-        //std::cout << retStr << std::endl;
-        //std::cout << retStr.size() << std::endl;
-        //std::cout << minLen << std::endl;
-        retStr.append(lhs, minLen, std::string::npos);
-        //std::cout << retStr << std::endl;
-        retStr.append(rhs, minLen, std::string::npos);
-        //std::cout << retStr << std::endl;
-        return retStr;
-    }
 }
 
-TEST(StreamCipher, 1)
+TEST(StreamCipherUnitTest, solution)
 {
-     EXPECT_EQ("\x3", XORstrings("\x41", "\x42"));
-     EXPECT_EQ("\x04\x04\x04\x0C", XORstrings("\x41\x42\x43\x44", "\x45\x46\x47\x48"));
-     EXPECT_EQ("\x04\x04\x04\x44", XORstrings("\x41\x42\x43\x44", "\x45\x46\x47"));
-     EXPECT_EQ("\x04\x04\x04\x48", XORstrings("\x41\x42\x43", "\x45\x46\x47\x48"));
-     EXPECT_EQ("\x04\x04\x04\xD1\x76\x50\xf2", XORstrings("\x41\x42\x43\x99\x76\x50\xf2", "\x45\x46\x47\x48"));
-}
-
-TEST(StreamCipher, 2)
-{
-     EXPECT_EQ("ABCD", hex_to_string("41424344"));
-     EXPECT_EQ("EFGH", hex_to_string("45464748"));
-}
-
-TEST(StreamCipher, 3)
-{
-     std::vector<std::string> ciphers = getCipherTexts();
-     size_t ciphers_size = ciphers.size();
-     //std::string xorCiphers;
-     //for (size_t i = 0; i < ciphers_size; ++i)
+     auto messages = decrypt_StreamManyTimeKey(getCipherTexts());
+     for (auto i : messages)
      {
-         std::vector<std::string> xors0(ciphers_size);
-         for (size_t i = 0; i < ciphers_size; ++i)
-         {
-             xors0[i] = XORstrings(ciphers[0], ciphers[i]);
-             /*
-             std::cout << std::endl;
-             std::cout << i << std::endl;
-             std::cout << std::endl;
-             std::cout << XORstrings(ciphers[0], ciphers[i]) << std::endl;
-             */
-         }
+         std::cout << i << std::endl;
      }
-     //xorCiphers = XORstrings(getTargetCipherText(), xorCiphers);
-     //std::cout << xorCiphers << std::endl;
 }
