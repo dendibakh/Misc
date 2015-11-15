@@ -2,10 +2,10 @@ export profile?=F
 .NOTPARALLEL:
 
 # defining variables
-BUILD_TOOL = g++
+BUILD_TOOL = clang++
 ARCHIVE_TOOL = ar
 
-COMPILE_FLAGS = -c -Wall -std=gnu++11
+COMPILE_FLAGS = -c -Wall -std=c++11
 PROFILE_FLAGS = 
 ifeq ($(profile) ,yes)
 PROFILE_FLAGS = -pg
@@ -23,7 +23,6 @@ OBJ_DIR = ./obj/
 ADD_LIBRARIES_DIR = -L./lib/
 #ADD_LIBRARIES = -lgtest_main
 ADD_LIBRARIES = -lgmock_main -lcryptopp
-
 ADD_HEADERS_DIR = ./include/
 
 # BurrowsWheelerLib objects
@@ -54,7 +53,7 @@ $(LIB_FILENAMES):
 	$(BUILD_TOOL) $(HEADER_DIR) $(COMPILE_FLAGS) -o $(OBJ_DIR)$@.o $(LIB_SOURCES_DIR)$@.cpp $(PROFILE_FLAGS)
 
 build_lib:
-	$(ARCHIVE_TOOL) rcs $(OBJ_DIR)lib$(LIB_NAME).a $(LIB_OBJECTS)
+	$(ARCHIVE_TOOL) rcs $(OBJ_DIR)lib$(LIB_NAME).a $(LIB_OBJECTS) 
 
 #building tests
 tests: $(TEST_FILENAMES) build_tests
@@ -63,9 +62,9 @@ $(TEST_FILENAMES):
 	$(BUILD_TOOL) $(HEADER_DIR) $(COMPILE_FLAGS) -o $(OBJ_DIR)$@.o $(TEST_SOURCES_DIR)$@.cpp $(PROFILE_FLAGS)
 
 build_tests:
-	$(BUILD_TOOL) -lpthread -o $(OBJ_DIR)$(TEST_NAME) $(TEST_OBJECTS) $(BENCHMARK_TEST_OBJECTS) $(ADD_LIBRARIES_DIR) $(ADD_LIBRARIES) -L$(OBJ_DIR) -l$(LIB_NAME) $(PROFILE_FLAGS)
+	$(BUILD_TOOL) -o $(OBJ_DIR)$(TEST_NAME) $(ADD_LIBRARIES_DIR) -L$(OBJ_DIR) -lpthread $(TEST_OBJECTS) -l$(LIB_NAME) $(ADD_LIBRARIES) $(PROFILE_FLAGS) 
 		
 #execute tests
 run_tests:
 	$(OBJ_DIR)$(TEST_NAME)
-	#gprof $(OBJ_DIR)$(TEST_NAME) gmon.out > profileReport.txt
+	gprof $(OBJ_DIR)$(TEST_NAME) gmon.out > profileReport.txt

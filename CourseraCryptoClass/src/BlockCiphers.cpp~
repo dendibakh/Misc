@@ -163,7 +163,7 @@ namespace MyModesImplementation
 			//StringSource ss3( cipher.substr(AES::BLOCKSIZE), true, new CryptoPP::HexDecoder( new StreamTransformationFilter( d, new StringSink( recovered ) ) ) );
 			//std::cout << hex_to_string("28a226d160dad07883d04e008a7897ee").size() << std::endl;
 			//StringSource ss3( hex_to_string("28a226d160dad07883d04e008a7897ee"), true, new CryptoPP::HexDecoder( new StreamTransformationFilter( d, new StringSink( recovered ) ) ) );        
-			StringSource ss3( std::string(cipher.data(), AES::BLOCKSIZE), true, new CryptoPP::HexDecoder( new StreamTransformationFilter( d, new StringSink( recovered ) ) ) );        
+			StringSource ss3( cipher.substr(AES::BLOCKSIZE), true, new CryptoPP::HexDecoder( new StreamTransformationFilter( d, new StringSink( recovered ) ) ) );        
 			decoded += XORstrings(recovered, cipher.substr(curBlock - AES::BLOCKSIZE, AES::BLOCKSIZE));
 //			std::cout << recovered << std::endl;
 			std::cout << cipher.substr(curBlock - AES::BLOCKSIZE, AES::BLOCKSIZE) << std::endl;
