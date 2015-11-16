@@ -64,7 +64,7 @@ namespace LibImplementation
 		// The StreamTransformationFilter removes padding as required.
 		StringSource( cipher, true, new StreamTransformationFilter( d, new StringSink( decoded ) ) ); 
 
-		return decoded;
+		return decoded.substr(AES::BLOCKSIZE);
 	}
 
 	std::string encrypt_AES_CTR(const std::string& key, const std::string& iv, const std::string& plainText)
@@ -139,45 +139,20 @@ namespace MyModesImplementation
 		byte aes_key[AES::DEFAULT_KEYLENGTH];
 		memcpy(&aes_key, key.data(), sizeof(aes_key));
 
-		ECB_Mode< AES >::Decryption d;
-		// ECB Mode does not use an IV
-		d.SetKey( aes_key, AES::DEFAULT_KEYLENGTH );
+		AESDecryption d;		        
+        	d.SetKey(aes_key, AES::DEFAULT_KEYLENGTH);
 
-		std::string decoded;
 		size_t cipherSize = cipher.size();
-		//std::cout << cipherSize << std::endl;
-		//for (size_t curBlock = AES::BLOCKSIZE; curBlock < cipherSize; curBlock += AES::BLOCKSIZE)		
+		std::string decoded(cipherSize - AES::BLOCKSIZE, 0);			
+		byte* curBlock = (byte*)cipher.data();
+		byte* decBlock = (byte*)decoded.data();  
+		for (size_t curBlockOffset = AES::BLOCKSIZE; curBlockOffset < cipherSize; curBlockOffset += AES::BLOCKSIZE)		
 		{
-			size_t curBlock = AES::BLOCKSIZE;			
-			std::string recovered;			
-			// The StreamTransformationFilter removes padding as required.
-			//std::cout << cipher.substr(curBlock) << std::endl;
-			//std::string toDecode(cipher, curBlock, AES::BLOCKSIZE);
-			//std::cout << toDecode << std::endl;
-			//std::cout << cipher.substr(curBlock, AES::BLOCKSIZE).size() << std::endl;
-			//std::cout << curBlock << std::endl;
-			//std::cout << AES::BLOCKSIZE << std::endl;
-			//std::cout << hex_to_string("28a226d160dad07883d04e008a7897ee2e4b7465d5290d0c0e6c682223") << std::endl;
-			//StringSource ss3( cipher.substr(curBlock, AES::BLOCKSIZE), true, new StreamTransformationFilter( d, new StringSink( recovered ) ) );
-			//StringSource ss3( hex_to_string("28a226d160dad07883d04e008a7897ee"), false, new StreamTransformationFilter( d, new StringSink( recovered ) ) );
-			//StringSource ss3( cipher.substr(AES::BLOCKSIZE), true, new CryptoPP::HexDecoder( new StreamTransformationFilter( d, new StringSink( recovered ) ) ) );
-			//std::cout << hex_to_string("28a226d160dad07883d04e008a7897ee").size() << std::endl;
-			//StringSource ss3( hex_to_string("28a226d160dad07883d04e008a7897ee"), true, new CryptoPP::HexDecoder( new StreamTransformationFilter( d, new StringSink( recovered ) ) ) );        
-			StringSource ss3( std::string(cipher.data(), AES::BLOCKSIZE), true, new CryptoPP::HexDecoder( new StreamTransformationFilter( d, new StringSink( recovered ) ) ) );        
-			decoded += XORstrings(recovered, cipher.substr(curBlock - AES::BLOCKSIZE, AES::BLOCKSIZE));
-//			std::cout << recovered << std::endl;
-			std::cout << cipher.substr(curBlock - AES::BLOCKSIZE, AES::BLOCKSIZE) << std::endl;
-				
-			/*
-			std::string decoded(cipherSize - AES::BLOCKSIZE, 0);			
-			byte* curBlock = (byte*)cipher.data();
-			byte* decBlock = (byte*)decoded.data();  
-			AESDecryption d;		        
-			const NameValuePairs &nvp = MakeParameters("", 0);
-        		d.UncheckedSetKey(aes_key, AES::BLOCKSIZE, nvp);
-		        d.ProcessAndXorBlock(curBlock + AES::BLOCKSIZE, curBlock, decBlock);
-			*/
+			d.ProcessAndXorBlock(curBlock + AES::BLOCKSIZE, curBlock, decBlock);
+			decBlock += AES::BLOCKSIZE;
+			curBlock += AES::BLOCKSIZE;
 		}
+		decoded.erase(decoded.size() - (byte)decoded.back(), (byte)decoded.back());
 
 		return decoded;
 	}

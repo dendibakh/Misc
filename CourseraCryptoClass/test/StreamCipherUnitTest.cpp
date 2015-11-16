@@ -30,6 +30,6 @@ TEST(StreamCipherUnitTest, solution)
      auto messages = decrypt_StreamManyTimeKey(getCipherTexts());
      for (auto i : messages)
      {
-         std::cout << i << std::endl;
+//         std::cout << i << std::endl;
      }
 }
