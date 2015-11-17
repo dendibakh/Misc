@@ -9,8 +9,8 @@
 
 using namespace testing;
 using namespace CryptoPP;
-//using namespace MyModesImplementation;
-using namespace LibImplementation;
+using namespace MyModesImplementation;
+//using namespace LibImplementation;
 
 TEST(BlockCipherUnitTest, 1)
 {
