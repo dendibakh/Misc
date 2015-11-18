@@ -125,8 +125,6 @@ namespace LibImplementation
 	}
 }
 
-#include <iostream>
-
 namespace MyModesImplementation
 {
 	std::string decrypt_AES_CBC(const std::string& key, const std::string& cipher)
