@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
+#include <vector>
 #include <sstream>
+#include <fstream>
+#include <stdexcept>
 
 namespace
 {
@@ -36,6 +39,14 @@ namespace
         //retStr.append(lhs, minLen, std::string::npos);
         //retStr.append(rhs, minLen, std::string::npos);
         return retStr;
+    }
+
+    std::vector<char> readFileAsString(const std::string& path)
+    {
+        std::ifstream input_stream(path.c_str(), std::ifstream::in | std::ios::binary);
+        if(input_stream.good())
+            return std::vector<char>((std::istreambuf_iterator<char>(input_stream)), std::istreambuf_iterator<char>());
+        throw std::runtime_error("Couldn't open the file");
     }
 
     bool isLetter(unsigned char c)

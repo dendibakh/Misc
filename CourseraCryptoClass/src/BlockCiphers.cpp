@@ -184,7 +184,7 @@ namespace MyModesImplementation
 		}
 	}
 
-	void incrementCounter(size_t& ctr)
+	void incrementCounter(int64_t& ctr)
 	{
 		#ifdef IS_LITTLE_ENDIAN
 			convertToBigEndian(ctr);
@@ -213,7 +213,7 @@ namespace MyModesImplementation
 		byte* curBlock = (byte*)cipher.data();
 		byte* counterBlock = curBlock;
 		byte* decBlock = (byte*)decoded.data();  
-		size_t *ctr = (size_t*)(curBlock + AES::BLOCKSIZE / 2);
+		int64_t *ctr = (int64_t*)(curBlock + AES::BLOCKSIZE / 2);
 		curBlock += AES::BLOCKSIZE;
 		for (size_t curBlockOffset = AES::BLOCKSIZE; curBlockOffset < cipherSize; curBlockOffset += AES::BLOCKSIZE)		
 		{

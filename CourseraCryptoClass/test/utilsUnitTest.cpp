@@ -26,3 +26,14 @@ TEST(StreamCipher, 3)
      EXPECT_FALSE(isLetter('\x3D'));
      EXPECT_FALSE(isLetter('\x7D'));
 }
+
+TEST(StreamCipher, 4)
+{
+    std::vector<char> file1 = readFileAsString("./test/6 - 1 - Introduction (11 min).mp4");
+    EXPECT_EQ('\x00', file1[0]);
+    EXPECT_EQ('\x00', file1[1]);
+    EXPECT_EQ('\x00', file1[2]);
+    EXPECT_EQ('\x20', file1[3]);
+    EXPECT_EQ('\x69', file1[16]);
+    EXPECT_EQ('\x31', file1[31]);
+}
