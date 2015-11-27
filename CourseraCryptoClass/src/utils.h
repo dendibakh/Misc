@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <stdexcept>
+#include "cryptocpp562/hex.h"
 
 namespace
 {
@@ -28,6 +29,22 @@ namespace
         return retStr;
     }
 
+    std::string convertToHex(const std::string& str)
+    {
+        std::string retStr;
+        using namespace CryptoPP;
+        StringSource( str, true, new HexEncoder( new StringSink( retStr ) ) );		
+        return retStr;
+    }
+
+    std::string convertFromHex(const std::string& str)
+    {
+        std::string retStr;
+        using namespace CryptoPP;
+        StringSource( str, true, new HexDecoder( new StringSink( retStr ) ) );		
+        return retStr;
+    }
+
     std::string XORstrings(const std::string& lhs, const std::string& rhs)
     {
         size_t minLen = std::min(lhs.size(), rhs.size());
@@ -41,11 +58,11 @@ namespace
         return retStr;
     }
 
-    std::vector<char> readFileAsString(const std::string& path)
+    std::string readFileAsString(const std::string& path)
     {
         std::ifstream input_stream(path.c_str(), std::ifstream::in | std::ios::binary);
         if(input_stream.good())
-            return std::vector<char>((std::istreambuf_iterator<char>(input_stream)), std::istreambuf_iterator<char>());
+            return std::string((std::istreambuf_iterator<char>(input_stream)), std::istreambuf_iterator<char>());
         throw std::runtime_error("Couldn't open the file");
     }
 

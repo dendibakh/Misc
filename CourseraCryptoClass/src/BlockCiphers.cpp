@@ -155,13 +155,6 @@ namespace MyModesImplementation
 		return decoded;
 	}
 
-	std::string convertToHex(const std::string& str)
-	{
-		std::string retStr;
-		StringSource( str, true, new HexEncoder( new StringSink( retStr ) ) );		
-		return retStr;
-	}
-
 	std::string decodeBlock(const std::string& counter, const std::string& cipher, AESEncryption& e)
 	{
 		if (counter.size() != AES::BLOCKSIZE)

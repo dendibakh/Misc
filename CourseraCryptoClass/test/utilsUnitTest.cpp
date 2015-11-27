@@ -20,6 +20,15 @@ TEST(StreamCipher, 2)
 
 TEST(StreamCipher, 3)
 {
+     EXPECT_EQ("ABCD", convertFromHex("41424344"));
+     EXPECT_EQ("EFGA", convertFromHex("45464741"));
+
+     EXPECT_EQ("41424344", convertToHex(convertFromHex("41424344")));
+     EXPECT_EQ("45464741", convertToHex(convertFromHex("45464741")));
+}
+
+TEST(StreamCipher, 4)
+{
      EXPECT_TRUE(isLetter('\x42'));
      EXPECT_TRUE(isLetter('\x6B'));
      EXPECT_FALSE(isLetter('\x13'));
@@ -27,9 +36,9 @@ TEST(StreamCipher, 3)
      EXPECT_FALSE(isLetter('\x7D'));
 }
 
-TEST(StreamCipher, 4)
+TEST(StreamCipher, 5)
 {
-    std::vector<char> file1 = readFileAsString("./test/6 - 1 - Introduction (11 min).mp4");
+    std::string file1 = readFileAsString("./test/6 - 1 - Introduction (11 min).mp4");
     EXPECT_EQ('\x00', file1[0]);
     EXPECT_EQ('\x00', file1[1]);
     EXPECT_EQ('\x00', file1[2]);
