@@ -21,11 +21,9 @@ TEST_SOURCES_DIR = ./test/
 OBJ_DIR = ./obj/
 
 ADD_LIBRARIES_DIR = -L./lib/
-#ADD_LIBRARIES = -lgtest_main
-ADD_LIBRARIES = -lgmock_main -lcryptopp
-ADD_HEADERS_DIR = ./include/
+ADD_LIBRARIES = -lgmock_main -lcryptopp -l:libcpprest.so.2.6
 
-# BurrowsWheelerLib objects
+# lib objects
 LIB_SOURCES = $(wildcard $(LIB_SOURCES_DIR)*.cpp)
 LIB_OBJECTS = $(subst $(LIB_SOURCES_DIR),$(OBJ_DIR),$(LIB_SOURCES:%.cpp=%.o))
 LIB_FILENAMES = $(subst $(LIB_SOURCES_DIR),,$(LIB_SOURCES:%.cpp=%))
