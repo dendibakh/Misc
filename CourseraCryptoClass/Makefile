@@ -21,7 +21,7 @@ TEST_SOURCES_DIR = ./test/
 OBJ_DIR = ./obj/
 
 ADD_LIBRARIES_DIR = -L./lib/
-ADD_LIBRARIES = -lgmock_main -lcryptopp -l:libcpprest.so.2.6
+ADD_LIBRARIES = -lgmock_main -lcryptopp -l:libcpprest.so.2.6 -lgmpxx -lgmp
 
 # lib objects
 LIB_SOURCES = $(wildcard $(LIB_SOURCES_DIR)*.cpp)
