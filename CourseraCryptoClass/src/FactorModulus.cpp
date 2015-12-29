@@ -18,15 +18,40 @@ namespace
         mpz_sqrt(x.get_mpz_t(), x.get_mpz_t()); // truncated sqrt(A^2 - N)
         return x;
     }
+
+    std::pair<mpz_class, mpz_class> computeTwoFactorsFromX(mpz_class x, mpz_class A)
+    {
+    	mpz_class p = A - x;
+        mpz_class q = A + x;
+        return std::make_pair(p, q);
+    }
 }
 
 std::pair<mpz_class, mpz_class> factorModulus(mpz_class N)
 {
         mpz_class A = computeA(N);
         mpz_class x = computeX(A, N);
-        mpz_class p;
-        mpz_sub(p.get_mpz_t(), A.get_mpz_t(), x.get_mpz_t()); // p = A - x;
-        mpz_class q;
-        mpz_add(q.get_mpz_t(), A.get_mpz_t(), x.get_mpz_t()); // q = A + x;
-	return std::make_pair(p, q);
+	return computeTwoFactorsFromX(x, A);
+}
+
+namespace
+{
+    bool isAFactorAvg(mpz_class A, mpz_class N)
+    {
+    	mpz_class x = computeX(A, N);
+        mpz_class p = A - x;
+        mpz_class q = A + x;
+        return N == p * q;
+    }
+}
+
+std::pair<mpz_class, mpz_class> factorModulusInBiggerRange(mpz_class N)
+{
+	mpz_class A = computeA(N);
+	while (!isAFactorAvg(A, N))
+	{
+	    A += 1;
+	}
+	mpz_class x = computeX(A, N);
+	return computeTwoFactorsFromX(x, A);
 }
