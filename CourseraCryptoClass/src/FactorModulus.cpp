@@ -1,4 +1,5 @@
 #include "FactorModulus.h"
+#include "utils.h"
 
 namespace
 {
@@ -116,3 +117,28 @@ std::pair<mpz_class, mpz_class> factorModulus3P2Q(mpz_class N)
 	return computeTwoFactorsFromX(x, A);
 }
 */
+
+namespace
+{
+	mpz_class computeInvertion(mpz_class g, mpz_class p)
+        {
+        	mpz_class gInv;
+                mpz_invert(gInv.get_mpz_t(), g.get_mpz_t(), p.get_mpz_t()); // g^-1
+                return gInv;
+        }
+}
+
+std::string decryptRSA(mpz_class cipherText, mpz_class N, mpz_class e)
+{
+        auto factros = factorModulus(N);
+	mpz_class fyiN = N - factros.first - factros.second + 1; // fyi(N) = N - p - q + 1
+	mpz_class d = computeInvertion(e, fyiN); // d = e^-1 mod (fyi(N))
+	mpz_class result;
+        mpz_powm(result.get_mpz_t(), cipherText.get_mpz_t(), d.get_mpz_t(), N.get_mpz_t()); // c^d mod N
+        
+        std::string plainText = result.get_str(16);
+	std::size_t textBegin = plainText.find("00");
+	std::string recoverdText(plainText, textBegin + 2);
+	return convertFromHex(recoverdText);
+}
+
