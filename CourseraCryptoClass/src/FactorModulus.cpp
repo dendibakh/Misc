@@ -55,3 +55,64 @@ std::pair<mpz_class, mpz_class> factorModulusInBiggerRange(mpz_class N)
 	mpz_class x = computeX(A, N);
 	return computeTwoFactorsFromX(x, A);
 }
+
+std::pair<mpz_class, mpz_class> factorModulus3P2Q(mpz_class N)
+{
+        mpz_class A = computeA(N * 24);
+        mpz_class x = computeX(A, N * 24);
+	mpz_class p = (A - x) / 6;
+        mpz_class q = (A + x) / 4;
+        return std::make_pair(p, q);
+}
+
+/*
+
+// Here is solution via exhaustive search. It won't find answer for big numbers !!!
+
+#include <iostream>
+
+namespace
+{
+    mpf_class computeTarget(mpz_class N)
+    {
+    	mpf_class target;
+    	mpf_class floatN(N);
+        mpf_sqrt(target.get_mpf_t(), floatN.get_mpf_t()); // sqrt(6N)
+        return target;
+    }
+    
+    bool isTargetReached(mpz_class A, mpz_class N, mpf_class target)
+    {
+    	//mpz_class x = computeX(A, N) + 1;
+    	mpz_class x = computeX(A, N);
+    	std::cout << "cuurent A: " << A.get_mpz_t() << std::endl;
+    	std::cout << "computed x: " << x.get_mpz_t() << std::endl;
+        mpf_class p = A - x;
+        mpf_class q = A + x;
+        mpf_class actual = ( 3 * p + 2 * q ) / 2;
+        std::cout << "actual: " << actual.get_mpf_t() << std::endl;
+        mpf_class error = actual - target;
+        std::cout << "error: " << error.get_mpf_t() << std::endl;
+        mpf_class absError = abs(error);
+        std::cout << "abs error: " << absError.get_mpf_t() << std::endl;
+        return absError <= 0.125f && p * q == N;
+    }
+}
+
+std::pair<mpz_class, mpz_class> factorModulus3P2Q(mpz_class N)
+{
+        mpz_class A = computeA(N);
+        std::cout << "A: " << A.get_mpz_t() << std::endl;
+        mpf_class target = computeTarget(N * 6);
+        std::cout << "target: " << target.get_mpf_t() << std::endl;
+        int i = 0;
+        while (!isTargetReached(A, N, target))
+	{
+	    A += 1;
+	    ++i;
+	}
+        //mpz_class x = computeX(A, N) + 1;
+        mpz_class x = computeX(A, N);
+	return computeTwoFactorsFromX(x, A);
+}
+*/
